@@ -28,4 +28,27 @@
 	- Open your web browser and go to [http://localhost:8000](http://localhost:8000) to view the application.
 
 ---
-If you encounter any issues, ensure that Python 3 is correctly installed and that you are in the project root directory containing `index.html`.
+
+## Branching and Pull Request Workflow
+
+1. **Create a New Feature Branch**
+	- Use the following command to create and switch to a new branch:
+	  ```sh
+	  git checkout -b feature/<your-feature-name>
+	  ```
+
+2. **Push Your Branch to Remote**
+	- Push the new branch to the remote repository:
+	  ```sh
+	  git push -u origin feature/<your-feature-name>
+	  ```
+
+3. **Open a Pull Request (PR)**
+	- Go to your repository on GitHub.
+	- You will see a prompt to create a pull request for your recently pushed branch.
+	- Click "Compare & pull request".
+	- Ensure the base branch is `main` and the compare branch is your `feature/<your-feature-name>` branch.
+	- Fill in the PR details and submit.
+
+---
+This workflow allows you to propose changes from your feature branch to the main branch. Reviewers can comment and approve before merging.
