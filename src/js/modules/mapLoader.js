@@ -66,7 +66,7 @@ export class MapLoader {
    */
   async loadZipCodeData() {
     try {
-      const response = await fetch('assets/data/state-zipcode-map.json');
+      const response = await fetch('src/assets/data/state-zipcode-map.json');
       this.stateZipCodes = await response.json();
       console.log('Loaded stateZipCodes:', this.stateZipCodes);
     } catch (error) {

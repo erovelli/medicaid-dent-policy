@@ -34,7 +34,7 @@ export const MAP_CONFIG = {
     // 3‑digit ZIP code polygons bundled with the repo
     zipcodes: {
       type: 'geojson',
-      data: 'assets/data/zip3codes.geojson'
+      data: 'src/assets/data/zip3codes.geojson'
     }
   },
   // -----------------------------------------------------------------
