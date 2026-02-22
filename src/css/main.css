@@ -7,6 +7,18 @@ body {
     height: 100vh;
 }
 
+/* Design tokens for dark theme */
+:root {
+  --panel-bg: #1e2a34;
+  --panel-text: #e0e0e0;
+  --accent: #2d4f59;
+  --accent-2: #24343a;
+  --muted: #cfe6e8;
+  --table-row-alt: rgba(255,255,255,0.02);
+  --table-border: rgba(255,255,255,0.06);
+  --table-radius: 8px;
+}
+
 html,
 body,
 #map {
@@ -169,55 +181,94 @@ body,
 /* Generic properties table (key / value) */
 .properties-table {
   width: 100%;
-  border-collapse: collapse;
-  background: #ffffff;
-  color: #111;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: transparent;
+  color: var(--panel-text);
   font-size: 13px;
+  border-radius: var(--table-radius);
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45);
 }
 .properties-table th {
   text-align: left;
-  vertical-align: top;
-  padding: 8px;
-  background: #24343a;
-  color: #fff;
+  vertical-align: middle;
+  padding: 12px 10px;
+  background: var(--accent-2);
+  color: var(--panel-text);
   width: 40%;
+  font-weight: 600;
 }
 .properties-table td {
-  padding: 8px;
-  border-bottom: 1px solid #e6eef0;
+  padding: 10px;
+  border-bottom: 1px solid var(--table-border);
   word-break: break-word;
+  background: transparent;
+}
+.properties-table tr:nth-child(even) td {
+  background: var(--table-row-alt);
 }
 
 /* Spending subtable: horizontally scrollable if wide, with sticky header */
 .spending-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: 13px;
   display: block;
   max-height: 40vh;
   overflow: auto;
-  background: #fff;
-  color: #111;
-  border: 1px solid #e6eef0;
+  background: transparent;
+  color: var(--panel-text);
+  border: 1px solid var(--table-border);
+  border-radius: var(--table-radius);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
 .spending-table thead th {
   position: sticky;
   top: 0;
-  background: #2d4f59;
-  color: #fff;
-  padding: 8px;
-  z-index: 2;
+  background: linear-gradient(180deg, rgba(45,79,89,0.98), rgba(45,79,89,0.92));
+  color: var(--panel-text);
+  padding: 10px 12px;
+  z-index: 3;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 .spending-table th,
 .spending-table td {
-  padding: 6px 8px;
-  border-bottom: 1px solid #eef3f4;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--table-border);
   text-align: right;
   white-space: nowrap;
 }
 .spending-table td:first-child,
 .spending-table thead th:first-child {
   text-align: left;
+}
+.spending-table tbody tr:nth-child(even) td {
+  background: var(--table-row-alt);
+}
+.spending-table tbody tr:hover td {
+  background: rgba(255,255,255,0.04);
+}
+
+/* Dark scrollbar styling for modern feel */
+.sidebar-inner::-webkit-scrollbar,
+.spending-table::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.sidebar-inner::-webkit-scrollbar-thumb,
+.spending-table::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.sidebar-inner::-webkit-scrollbar-track,
+.spending-table::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 /* Make sure long tables don't force the sidebar to grow beyond the viewport */
