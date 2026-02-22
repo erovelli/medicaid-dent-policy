@@ -2,7 +2,7 @@
 -- ogr2ogr \\n  -f "PostgreSQL" \\n  PG:"host=localhost user=erovelli dbname=erovelli" \\n  zip3codes.geojson \\n  -nln geojson.zip3_codes \\n  -nlt MULTIPOLYGON \\n  -lco GEOMETRY_NAME=geom \\n  -lco FID=id \\n  -append \\n  -sql "SELECT \"3dig_zip\" AS zip3, * FROM zip3codes"
 
 -- aggregate combined table by zip3, billing code, and year_month
--- caste hcpcs_code to category based on below range
+-- cast hcpcs_code to category based on below range
 -- Category | Code Range
 
 -- Diagnostic | D0100–D0999
@@ -100,16 +100,15 @@ ORDER BY
 -- combine aggregated data with geojson
 CREATE OR REPLACE VIEW geojson.zip3_with_spending AS
 SELECT
-    z.id,
     z.zip3,
     z.geom,
     json_agg(
         json_build_object(
-            'category', p.category,
-            'year_month', p.year_month,
-            'total_beneficiaries_served', p.total_beneficiaries_served,
-            'total_claims', p.total_claims,
-            'total_amount_paid', p.total_amount_paid
+            'C', p.category,
+            'YM', p.year_month,
+            'TBS', p.total_beneficiaries_served,
+            'TC', p.total_claims,
+            'TAP', p.total_amount_paid
         )
         ORDER BY p.year_month, p.category
     ) AS spending
@@ -125,7 +124,11 @@ ORDER BY
 
 
 -- EXPORT enriched view to geojson
--- ogr2ogr \\n  -f "GeoJSON" \\n  zip3_spending.geojson \\n  PG:"host=localhost user=erovelli dbname=erovelli" \\n  -sql "SELECT * FROM geojson.zip3_with_spending"
+-- ogr2ogr \
+-- -f "GeoJSON" \
+-- zip3_spending.geojson \
+-- PG:"host=localhost user=erovelli dbname=erovelli" \
+-- -sql "SELECT * FROM geojson.zip3_with_spending ORDER BY zip3 ASC"
 
 
 2257524
