@@ -70,12 +70,30 @@ body,
 }
 
 /* Performance optimizations */
+.sidebar-handle {
+  width: 48px;
+  height: 6px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 6px;
+  margin: 0;
+  cursor: ns-resize;
+  touch-action: none;
+  /* keep the handle above content and always clickable */
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+  pointer-events: auto;
+}
+.sidebar-handle:active { opacity: 0.9; }
+
+/* Main sidebar container */
 #sidebar-container {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  /* limit height so it behaves like a bottom sheet */
   height: min(52vh, 520px);
   max-height: 80vh;
   width: 100%;
@@ -84,11 +102,9 @@ body,
   box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.3);
   transform: translateY(100%);
   transition: transform 0.32s cubic-bezier(.2,.9,.2,1);
-  display: flex;
-  flex-direction: column;
-  /* leave extra top padding so the absolute-positioned handle doesn't overlap content */
-  padding: 28px 16px 18px;
-  overflow: auto;
+  display: block; /* allow absolutely positioned inner content to size correctly */
+  padding: 0;
+  overflow: visible;
   z-index: 1000;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
@@ -101,24 +117,28 @@ body,
 }
 
 #sidebar-container .sidebar-close-btn {
-  align-self: flex-start;
-  background: #008b8b;
-  color: #ffffff;
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: transparent;
   border: none;
-  border-radius: 4px;
   font-size: 18px;
-  padding: 5px 10px;
+  color: #dfeff0;
   cursor: pointer;
+  z-index: 1110;
 }
 
-#sidebar-container h2 {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 18px;
-  color: #ffffff;
+/* Inner scrollable area that actually shows the scrollbar and fills to the container bottom */
+.sidebar-inner {
+  position: absolute;
+  top: 44px; /* leave room for the handle and close button */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  padding: 8px 16px 18px;
+  box-sizing: border-box;
 }
-
-/* Grab handle at top of bottom sheet */
 .sidebar-handle {
   width: 48px;
   height: 6px;
@@ -203,7 +223,6 @@ body,
 /* Make sure long tables don't force the sidebar to grow beyond the viewport */
 #sidebar-container.sidebar-open {
   max-height: 100vh;
-  overflow: auto;
 }
 
 @media (max-width: 768px) {

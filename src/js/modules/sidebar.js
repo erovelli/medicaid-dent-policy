@@ -31,6 +31,12 @@ export class Sidebar {
     // place handle before the close button so it's visible at the top
     this.container.insertBefore(this.handle, this.closeBtn);
 
+    // Create inner scrollable content wrapper so the scrollbar is pinned to the
+    // bottom of the viewport (the container remains fixed while this element scrolls).
+    this.content = document.createElement('div');
+    this.content.className = 'sidebar-inner';
+    this.container.appendChild(this.content);
+
     // Drag state
     this._dragging = false;
     this._dragStartY = 0;
@@ -156,17 +162,15 @@ export class Sidebar {
    * @param {string|HTMLElement} content - Text or element to display.
    */
   show(content) {
-    // Clear existing content except the close button
-    Array.from(this.container.children)
-      .filter((el) => el !== this.closeBtn && el !== this.handle)
-      .forEach((el) => el.remove());
+    // Clear existing inner content and append into the scroll wrapper
+    this.content.innerHTML = '';
 
     if (typeof content === "string") {
       const el = document.createElement("h2");
       el.textContent = content;
-      this.container.appendChild(el);
+      this.content.appendChild(el);
     } else if (content instanceof HTMLElement) {
-      this.container.appendChild(content);
+      this.content.appendChild(content);
     }
 
     this.container.classList.add("sidebar-open");
