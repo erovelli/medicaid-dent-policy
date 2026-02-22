@@ -18,6 +18,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         mapLoader.setStateClickHandler((state) => {
             sidebar.show(`State: ${state}`);
         });
+        // When a zipcode polygon is clicked, show its properties table in the sidebar
+        mapLoader.setZipcodeClickHandler((feature) => {
+            const zip = feature && feature.properties ? feature.properties.zip3 : 'unknown';
+            sidebar.showFeature(feature, `Zipcode: ${zip}`);
+        });
         console.log('Map application initialized successfully');
     } catch (error) {
         console.error('Failed to initialize map application:', error);

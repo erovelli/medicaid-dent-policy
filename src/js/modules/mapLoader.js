@@ -15,16 +15,25 @@ export class MapLoader {
     this.mapContainer = mapContainer;
     // Callback invoked when a state is clicked – set via setStateClickHandler.
     this.stateClickCallback = null;
+    // Callback invoked when a zipcode polygon is clicked.
+    this.zipcodeClickCallback = null;
     // Mapbox GL map instance – created in init().
     this.map = null;
     // Mapping state name → array of ZIP codes (loaded from JSON).
     this.stateZipCodes = {};
     // Currently selected state (used for filtering).
     this.selectedState = null;
+    // Currently highlighted zipcode (zip3 string)
+    this.highlightedZip3 = null;
     // Flag once map and layers are fully loaded.
     this.isInitialized = false;
     // Store listeners so we can clean them up in destroy().
     this.eventListeners = [];
+  }
+
+  // Register a function that receives the clicked zipcode feature.
+  setZipcodeClickHandler(fn) {
+    this.zipcodeClickCallback = fn;
   }
 
   // Register a function that receives the state name when a state polygon is clicked.
@@ -88,9 +97,23 @@ export class MapLoader {
         this.map.addLayer(MAP_CONFIG.layers.states);
         this.map.addLayer(MAP_CONFIG.layers.zipcodes);
         this.map.addLayer(MAP_CONFIG.layers.zipcodesLabels);
+        // Add highlight layer above the zipcode layer to show selected zip
+        // Start with an empty filter so nothing is highlighted.
+        if (!this.map.getLayer('zipcode-highlight')) {
+          this.map.addLayer({
+            id: 'zipcode-highlight',
+            type: 'fill',
+            source: 'zipcodes',
+            paint: {
+              'fill-color': 'rgba(255, 213, 79, 0.85)',
+              'fill-outline-color': 'rgba(255, 193, 7, 0.9)'
+            },
+            filter: ['in', ['get', 'zip3'], ['literal', []]]
+          }, MAP_CONFIG.layers.zipcodesLabels.id || 'zipcode-labels');
+        }
         // Initial filters: hide all ZIP code polygons/labels.
-        this.map.setFilter('zipcode-layer', ['in', ['get', '3dig_zip'], ['literal', []]]);
-        this.map.setFilter('zipcode-labels', ['in', ['get', '3dig_zip'], ['literal', []]]);
+        this.map.setFilter('zipcode-layer', ['in', ['get', 'zip3'], ['literal', []]]);
+        this.map.setFilter('zipcode-labels', ['in', ['get', 'zip3'], ['literal', []]]);
         // Resolve when map has finished drawing.
         this.map.once('idle', () => resolve(this.map));
       });
@@ -149,6 +172,10 @@ export class MapLoader {
     }
     );
     this.filterZipcodesForState(stateName);
+    // Clear any previously highlighted zipcode when changing states
+    if (this.highlightedZip3) {
+      this.setHighlightedZip(null);
+    }
     if (this.stateClickCallback) {
       this.stateClickCallback(stateName);
     }
@@ -158,14 +185,39 @@ export class MapLoader {
    * Show a popup with the ZIP code when a user clicks on a ZIP area.
    */
   handleZipcodeClick(e) {
-    new maplibregl.Popup({
-      closeButton: true,
-      closeOnClick: true,
-      offset: 15
-    })
-      .setLngLat(e.lngLat)
-      .setHTML(`<strong>Zip Code:</strong> ${e.features[0].properties['3dig_zip']}`)
-      .addTo(this.map);
+    // If an external handler is registered, call it with the clicked feature.
+    if (this.zipcodeClickCallback) {
+      try {
+        this.zipcodeClickCallback(e.features[0]);
+      } catch (err) {
+        console.error('Error in zipcodeClickCallback:', err);
+      }
+    }
+    // Highlight the clicked zipcode and remove previous highlight.
+    const clickedZip = e.features[0].properties && e.features[0].properties.zip3;
+    if (clickedZip) this.setHighlightedZip(clickedZip);
+  }
+
+  /**
+   * Highlight a zipcode polygon by its zip3 value.
+   * Clears previous highlight automatically.
+   * @param {string|null} zip3
+   */
+  setHighlightedZip(zip3) {
+    if (!this.map || !this.map.getLayer) return;
+    // Toggle off if the same zip is selected
+    if (this.highlightedZip3 === zip3) {
+      this.highlightedZip3 = null;
+      this.map.setFilter('zipcode-highlight', ['in', ['get', 'zip3'], ['literal', []]]);
+      return;
+    }
+    this.highlightedZip3 = zip3;
+    try {
+      // Prefer equality expression if supported
+      this.map.setFilter('zipcode-highlight', ['==', ['get', 'zip3'], zip3]);
+    } catch (err) {
+      this.map.setFilter('zipcode-highlight', ['in', ['get', 'zip3'], ['literal', [zip3]]]);
+    }
   }
 
   /**
@@ -189,12 +241,12 @@ export class MapLoader {
     const zips = this.stateZipCodes[stateName] || [];
     const zip3s = zips.map((z) => z.substring(0, 3));
     if (zips.length > 0) {
-      this.map.setFilter('zipcode-layer', ['in', ['get', '3dig_zip'], ['literal', zip3s]]);
-      this.map.setFilter('zipcode-labels', ['in', ['get', '3dig_zip'], ['literal', zip3s]]);
+      this.map.setFilter('zipcode-layer', ['in', ['get', 'zip3'], ['literal', zip3s]]);
+      this.map.setFilter('zipcode-labels', ['in', ['get', 'zip3'], ['literal', zip3s]]);
     } else {
       console.log('state is empty ' + stateName.replace(/\s/g, ''));
-      this.map.setFilter('zipcode-layer', ['in', ['get', '3dig_zip'], ['literal', []]]);
-      this.map.setFilter('zipcode-labels', ['in', ['get', '3dig_zip'], ['literal', []]]);
+      this.map.setFilter('zipcode-layer', ['in', ['get', 'zip3'], ['literal', []]]);
+      this.map.setFilter('zipcode-labels', ['in', ['get', 'zip3'], ['literal', []]]);
     }
   }
 

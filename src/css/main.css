@@ -72,26 +72,32 @@ body,
 /* Performance optimizations */
 #sidebar-container {
   position: fixed;
-  top: 0;
   left: 0;
-  right: auto;
-  width: 300px;
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  /* limit height so it behaves like a bottom sheet */
+  height: min(52vh, 520px);
+  max-height: 80vh;
+  width: 100%;
   background: #1e2a34;
   color: #e0e0e0;
-  box-shadow: 3px 0 5px rgba(0, 0, 0, 0.3);
-  transform: translateX(-100%);
-  transition: transform 0.3s ease;
+  box-shadow: 0 -6px 18px rgba(0, 0, 0, 0.3);
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(.2,.9,.2,1);
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  /* leave extra top padding so the absolute-positioned handle doesn't overlap content */
+  padding: 28px 16px 18px;
+  overflow: auto;
   z-index: 1000;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 14px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 #sidebar-container.sidebar-open {
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
 #sidebar-container .sidebar-close-btn {
@@ -111,19 +117,162 @@ body,
   font-size: 18px;
   color: #ffffff;
 }
+
+/* Grab handle at top of bottom sheet */
+.sidebar-handle {
+  width: 48px;
+  height: 6px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 6px;
+  margin: 0;
+  cursor: ns-resize;
+  touch-action: none;
+  /* keep the handle above content and always clickable */
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+  pointer-events: auto;
+}
+.sidebar-handle:active { opacity: 0.9; }
+
+.sidebar-section {
+  padding: 6px 0;
+}
+#sidebar-container .sidebar-properties {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Generic properties table (key / value) */
+.properties-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  color: #111;
+  font-size: 13px;
+}
+.properties-table th {
+  text-align: left;
+  vertical-align: top;
+  padding: 8px;
+  background: #24343a;
+  color: #fff;
+  width: 40%;
+}
+.properties-table td {
+  padding: 8px;
+  border-bottom: 1px solid #e6eef0;
+  word-break: break-word;
+}
+
+/* Spending subtable: horizontally scrollable if wide, with sticky header */
+.spending-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  display: block;
+  max-height: 40vh;
+  overflow: auto;
+  background: #fff;
+  color: #111;
+  border: 1px solid #e6eef0;
+}
+.spending-table thead th {
+  position: sticky;
+  top: 0;
+  background: #2d4f59;
+  color: #fff;
+  padding: 8px;
+  z-index: 2;
+}
+.spending-table th,
+.spending-table td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #eef3f4;
+  text-align: right;
+  white-space: nowrap;
+}
+.spending-table td:first-child,
+.spending-table thead th:first-child {
+  text-align: left;
+}
+
+/* Make sure long tables don't force the sidebar to grow beyond the viewport */
+#sidebar-container.sidebar-open {
+  max-height: 100vh;
+  overflow: auto;
+}
+
+@media (max-width: 768px) {
+  /* On small screens the bottom sheet should be taller and full width */
+  #sidebar-container {
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 56vh;
+    transform: translateY(100%);
+  }
+  #sidebar-container.sidebar-open {
+    transform: translateY(0);
+  }
+  .spending-table {
+    max-height: 48vh;
+  }
+}
+#ym-slider-container,
+.ym-slider-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  /* ensure the slider doesn't overlay the grab handle */
+  z-index: 900;
+}
+.ym-slider-label {
+  color: #f0f6f7;
+  font-size: 13px;
+  text-align: center;
+}
+.ym-slider-input {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: #2d4f59;
+  border-radius: 6px;
+  outline: none;
+}
+.ym-slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #2d4f59;
+  cursor: pointer;
+}
+.ym-slider-input::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #2d4f59;
+  cursor: pointer;
+}
 #sidebar-container p {
   margin: 0 0 10px;
 }
 
-#sidebar-container.sidebar-open {
-  transform: translateX(0);
-}
-
 #sidebar-container .sidebar-close-btn {
-  align-self: flex-start;
+  align-self: flex-end;
   background: transparent;
   border: none;
   font-size: 18px;
+  color: #dfeff0;
   cursor: pointer;
 }
 

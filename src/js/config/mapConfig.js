@@ -34,7 +34,7 @@ export const MAP_CONFIG = {
     // 3‑digit ZIP code polygons bundled with the repo
     zipcodes: {
       type: 'geojson',
-      data: 'src/assets/data/zip3codes.geojson'
+      data: 'src/assets/data/zip3_spending.geojson'
     }
   },
   // -----------------------------------------------------------------
@@ -66,8 +66,8 @@ export const MAP_CONFIG = {
       type: 'symbol',
       source: 'zipcodes',
       layout: {
-        // Use the "3dig_zip" property from the GeoJSON
-        'text-field': ['get', '3dig_zip'],
+        // Use the "zip3" property from the GeoJSON
+        'text-field': ['get', 'zip3'],
         'text-size': 14
       },
       paint: {
