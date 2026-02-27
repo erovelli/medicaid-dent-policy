@@ -15,9 +15,9 @@
 
 CREATE SCHEMA IF NOT EXISTS nppes;
 
-DROP TABLE IF EXISTS nppes.npi_staging;
+DROP TABLE IF EXISTS nppes.npi_raw;
 
-CREATE TABLE nppes.npi_staging (
+CREATE TABLE nppes.npi_raw (
 
     -- ============================
     -- Core Provider Identification
