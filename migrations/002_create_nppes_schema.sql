@@ -1,3 +1,18 @@
+/*
+ * NPPES Schema Definition
+ * 
+ * This script creates the NPPES (National Plan and Provider Enumeration System) schema
+ * and the npi_staging table, which serves as a normalized staging layer for National
+ * Provider Identifier (NPI) data. 
+ * 
+ * IMPORTANT: The npi_staging table is designed to hold raw NPI data imported from the NPPES
+ * 
+ * The table includes comprehensive provider information
+ * including identification details, mailing and practice addresses, taxonomies, licenses,
+ * authorized official information, and other provider identifiers.
+ * 
+ */
+
 CREATE SCHEMA IF NOT EXISTS nppes;
 
 DROP TABLE IF EXISTS nppes.npi_staging;
@@ -482,7 +497,3 @@ CREATE TABLE nppes.npi_staging (
 
     certification_date DATE
 );
-
-
-
-

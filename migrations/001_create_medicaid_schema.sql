@@ -1,3 +1,22 @@
+/*
+ * Medicaid Schema Definition
+ * 
+ * This script creates the medicaid schema containing a normalized dimensional data model
+ * for Medicaid dental provider spending and utilization data. The schema includes:
+ * 
+ * - providers: Dimension table for provider information (NPIs)
+ * - procedures: Dimension table for HCPCS procedure codes
+ * - months: Time dimension table for year-month periods
+ * - provider_spending: Fact table with spending metrics, claims, and beneficiary counts
+ *   (tracks both servicing and billing NPIs for dental procedures)
+ *
+ *
+ * IMPORTANT: - provider_spending_staging: Staging table for data import/ETL
+ * 
+ * This is designed to support analysis of dental provider utilization patterns,
+ * spending trends, and beneficiary access to dental services under Medicaid.
+ */
+
 CREATE SCHEMA IF NOT EXISTS medicaid;
 SET search_path TO medicaid;
 
@@ -57,6 +76,3 @@ CREATE TABLE medicaid.provider_spending_staging (
     claims_count                INTEGER,
     total_amount_paid           NUMERIC(18,2)
 );
-
-
-
