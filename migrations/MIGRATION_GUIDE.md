@@ -50,25 +50,11 @@ Creates the enriched output table:
 
 ---
 
-### Step 4: Add Performance Indexes
-**File:** `004_add_staging_join_indexes.sql`
-
-Creates indexes to speed up data joining:
-- `idx_spending_servicing_npi` on staging table
-- `idx_npi_staging_npi` on NPPES data
-
-**In pgAdmin4:**
-1. Open new Query Tool
-2. Copy entire contents of `004_add_staging_join_indexes.sql`
-3. Paste and Execute
-
----
-
 ## Data Loading Phase
 
-After Step 4 is complete, upload your data files:
+Now upload your data files (before adding indexes):
 
-### Upload NPPES Data
+### Step 4: Upload NPPES Data
 **File:** Your NPPES CSV export (provider data from CMS)
 **Target Table:** `nppes.npi_staging`
 
@@ -104,7 +90,7 @@ After Step 4 is complete, upload your data files:
 
 ---
 
-### Upload HHS Medicaid Spending Data
+### Step 5: Upload HHS Medicaid Spending Data
 **File:** Your HHS Medicaid spending CSV (claims, beneficiaries, amounts)
 **Target Table:** `medicaid.provider_spending_staging`
 
@@ -126,7 +112,21 @@ After Step 4 is complete, upload your data files:
 
 ---
 
-### Step 5: Populate Enriched Geo Table
+### Step 6: Add Performance Indexes
+**File:** `004_add_staging_join_indexes.sql`
+
+Now that your data is loaded, add indexes to speed up queries:
+- `idx_spending_servicing_npi` on staging table
+- `idx_npi_staging_npi` on NPPES data
+
+**In pgAdmin4:**
+1. Open new Query Tool
+2. Copy entire contents of `004_add_staging_join_indexes.sql`
+3. Paste and Execute
+
+---
+
+### Step 7: Populate Enriched Geo Table
 **File:** `005_populate_provider_procedure_monthly_geo.sql`
 
 After both data files are uploaded, this migration joins the staging data and creates the final enriched output table with geographic information and filters for dental procedures only (HCPCS codes starting with 'D').
@@ -147,11 +147,11 @@ After both data files are uploaded, this migration joins the staging data and cr
    ↓
 3. Execute 003_create_provider_procedure_monthly_geo.sql
    ↓
-4. Execute 004_add_staging_join_indexes.sql
+4. UPLOAD nppes.npi_staging data (NPPES CSV)
    ↓
-5. UPLOAD nppes.npi_staging data (NPPES CSV)
+5. UPLOAD medicaid.provider_spending_staging data (HHS spending CSV)
    ↓
-6. UPLOAD medicaid.provider_spending_staging data (HHS spending CSV)
+6. Execute 004_add_staging_join_indexes.sql
    ↓
 7. Execute 005_populate_provider_procedure_monthly_geo.sql
    ↓
