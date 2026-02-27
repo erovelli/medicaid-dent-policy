@@ -20,7 +20,7 @@
 CREATE OR REPLACE VIEW medicaid.provider_spending_zip3 AS
 WITH cleaned AS (
     SELECT
-        LEFT(NULLIF(TRIM(postal_code), ''), 3) AS zip3,
+        LEFT(NULLIF(TRIM(zip_code_5), ''), 3) AS zip3,
         hcpcs_code,
         year_month,
         beneficiaries_served_count,
