@@ -1,30 +1,7 @@
-SELECT
-    hcpcs_code,
-    SUM(claims_count)        AS total_claims_count,
-    SUM(total_amount_paid)   AS total_amount_paid
-FROM medicaid.provider_spending_staging
-WHERE hcpcs_code LIKE 'D%'
-GROUP BY hcpcs_code
-ORDER BY total_claims_count DESC;
 
 
-SELECT
-    p.*,
-    n.provider_first_line_business_practice_location_address,
-	n.provider_second_line_business_practice_location_address,
-	n.provider_business_practice_location_address_city_name,
-	n.provider_business_practice_location_address_state_name, 
-	n.provider_business_practice_location_address_postal_code, 
-	n.provider_business_practice_location_address_country_code, 
-	n.provider_business_practice_location_address_telephone_number
-FROM medicaid.provider_spending_staging p
-JOIN nppes.npi_staging n
-    ON p.servicing_npi = n.npi
-WHERE p.hcpcs_code LIKE 'D%'
-LIMIT 100;
 
-
-CREATE TABLE medicaid.provider_spending_enriched (
+CREATE TABLE medicaid.provider_procedure_monthly_geo (
     servicing_npi VARCHAR(10),
     billing_npi VARCHAR(10),
     hcpcs_code VARCHAR(10),
@@ -53,7 +30,7 @@ ON nppes.npi_staging(npi);
 ANALYZE medicaid.provider_spending_staging;
 ANALYZE nppes.npi_staging;
 
-INSERT INTO medicaid.provider_spending_enriched
+INSERT INTO medicaid.provider_procedure_monthly_geo
 SELECT
     p.servicing_npi,
     p.billing_npi,

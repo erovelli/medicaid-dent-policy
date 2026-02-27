@@ -33,7 +33,7 @@ WITH cleaned AS (
             THEN SUBSTRING(hcpcs_code FROM 2 FOR 4)::int
             ELSE NULL
         END AS hcpcs_numeric
-    FROM medicaid.provider_spending_enriched
+    FROM medicaid.provider_procedure_monthly_geo
 )
 
 SELECT
