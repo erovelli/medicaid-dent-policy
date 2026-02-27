@@ -12,7 +12,7 @@ SELECT
     n.provider_business_practice_location_address_state_name   AS state,
     n.provider_business_practice_location_address_postal_code  AS zip_code_5,
     n.provider_business_practice_location_address_country_code AS country_code
-FROM medicaid.provider_spending_staging p
-JOIN nppes.npi_staging n
+FROM medicaid.provider_spending_raw p
+JOIN nppes.npi_raw n
   ON p.servicing_npi = n.npi::text
 WHERE p.hcpcs_code LIKE 'D%';
