@@ -13,6 +13,7 @@
  * 
  */
 
+BEGIN;
 CREATE SCHEMA IF NOT EXISTS nppes;
 
 DROP TABLE IF EXISTS nppes.npi_raw;
@@ -497,3 +498,5 @@ CREATE TABLE nppes.npi_raw (
 
     certification_date DATE
 );
+
+COMMIT;

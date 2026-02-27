@@ -1,4 +1,5 @@
 -- populate provider_procedure_monthly_geo from staging data (dental codes only)
+BEGIN;
 INSERT INTO medicaid.provider_procedure_monthly_geo
 SELECT
     p.servicing_npi,
@@ -16,3 +17,5 @@ FROM medicaid.provider_spending_raw p
 JOIN nppes.npi_raw n
   ON p.servicing_npi = n.npi::text
 WHERE p.hcpcs_code LIKE 'D%';
+
+COMMIT;

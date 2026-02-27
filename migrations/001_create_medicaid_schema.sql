@@ -7,6 +7,7 @@
  * spending trends, and beneficiary access to dental services under Medicaid.
  */
 
+BEGIN;
 CREATE SCHEMA IF NOT EXISTS medicaid;
 SET search_path TO medicaid;
 
@@ -21,3 +22,5 @@ CREATE TABLE medicaid.provider_spending_raw (
     claims_count                INTEGER,
     total_amount_paid           NUMERIC(18,2)
 );
+
+COMMIT;
