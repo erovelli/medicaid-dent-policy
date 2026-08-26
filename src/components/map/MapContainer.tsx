@@ -67,8 +67,6 @@ import {
     STATES_LINE_OPACITY,
     ZIP3_LINE_OPACITY,
     COUNTY_LINE_OPACITY,
-    TIGER_ATTRIBUTION,
-    WORLD_ATTRIBUTION,
     OSM_ATTRIBUTION,
 } from "../../constants/map";
 
@@ -95,7 +93,6 @@ function addWorldLayer(map: maplibregl.Map) {
         map.addSource(WORLD_SOURCE, {
             type: "geojson",
             data: `${BASE}${WORLD_GEOJSON}`,
-            attribution: WORLD_ATTRIBUTION,
         });
     }
 
@@ -133,7 +130,6 @@ function addStatesLayers(map: maplibregl.Map) {
             type: "vector",
             url: `pmtiles://${BASE}states.pmtiles`,
             promoteId: { [STATES_LAYER]: STATES_ID_PROP },
-            attribution: TIGER_ATTRIBUTION,
         });
     }
 
@@ -199,7 +195,6 @@ function addCountyLayers(map: maplibregl.Map) {
             type: "geojson",
             data: `${BASE}${COUNTY_GEOJSON}`,
             promoteId: COUNTY_ID_PROP,
-            attribution: TIGER_ATTRIBUTION,
         });
     }
 
@@ -263,7 +258,6 @@ function addZip3Layers(map: maplibregl.Map) {
             type: "vector",
             url: `pmtiles://${BASE}zip3.pmtiles`,
             promoteId: { [ZIP3_LAYER]: ZIP3_ID_PROP },
-            attribution: TIGER_ATTRIBUTION,
         });
     }
 
