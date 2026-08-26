@@ -16,7 +16,7 @@ export const REPO_URL = "https://github.com/erovelli/CHOMP";
 export type PageSection =
     | { kind: "paragraph"; body: string }
     | { kind: "list"; heading?: string; items: readonly string[] }
-    | { kind: "links"; items: readonly { label: string; href: string }[] }
+    | { kind: "links"; heading?: string; items: readonly { label: string; href: string }[] }
     | { kind: "rule" }
     | {
           kind: "people";
@@ -81,40 +81,84 @@ export const PAGE_CONTENT: Record<NavPage, PageContent> = {
         sections: [
             {
                 kind: "links",
+                heading: "Data sources",
                 items: [
                     {
-                        label: "HHS Open Data — Medicaid Dental Claims, 2018–2024",
-                        href: "https://data.cms.gov/",
+                        label: "HHS Open Data, Medicaid Provider Spending (2018–2024)",
+                        href: "https://opendata.hhs.gov/datasets/medicaid-provider-spending/",
                     },
                     {
-                        label: "CMS NPPES — National Plan & Provider Enumeration System",
+                        label: "CMS NPPES",
                         href: "https://download.cms.gov/nppes/NPI_Files.html",
                     },
                     {
-                        label: "U.S. Census — ACS C27007 Medicaid enrollment",
-                        href: "https://www.census.gov/programs-surveys/acs",
+                        label: "NBER NPPES historical archives",
+                        href: "https://data.nber.org/npi/zip/",
                     },
                     {
-                        label: "U.S. Census TIGER/Line — state and ZCTA boundaries",
+                        label: "CMS Medicaid DQ Atlas",
+                        href: "https://www.medicaid.gov/dq-atlas/welcome",
+                    },
+                    {
+                        label: "U.S. Census ACS, table B27007",
+                        href: "https://data.census.gov/table/ACSST1Y2023.S2704",
+                    },
+                ],
+            },
+            {
+                kind: "links",
+                heading: "Geographies",
+                items: [
+                    {
+                        label: "U.S. Census TIGER/Line 2023",
                         href: "https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html",
                     },
                     {
-                        label: "U.S. Department of State — LSIB / World Polygons",
-                        href: "https://geodata.state.gov/",
+                        label: "U.S. Department of State, Office of the Geographer, Large Scale International Boundaries (LSIB)",
+                        href: "https://geodata.state.gov/geonetwork/srv/api/records/3bdb81a0-c1b9-439a-a0b1-85dac30c59b2",
+                    },
+                ],
+            },
+            {
+                kind: "paragraph",
+                body: "CDT Code on Dental Procedures and Nomenclature © American Dental Association. All rights reserved. CHOMP displays procedure spending grouped by CDT division and does not reproduce individual CDT codes or procedure-level descriptions.",
+            },
+            {
+                kind: "links",
+                items: [
+                    {
+                        label: "AAPD CDT category reference",
+                        href: "https://www.aapd.org/globalassets/assets/1/7/chapter1.pdf",
                     },
                     {
-                        label: "American Dental Association — CDT category conventions",
-                        href: "https://www.ada.org/publications/cdt",
+                        label: "CMS copyright guidelines for CPT, CDT, and NUBC code sets",
+                        href: "https://www.cms.gov/files/document/copyright-guidelines-cpt-cdt-nubc-code-sets-all-years.pdf",
+                    },
+                    {
+                        label: "ADA CDT licensing",
+                        href: "https://www.ada.org/publications/ada-store-products/licensing-for-commercial-users",
                     },
                 ],
             },
             { kind: "rule" },
             {
                 kind: "links",
+                heading: "Software & basemap",
                 items: [
-                    { label: "MapLibre GL JS", href: "https://maplibre.org/" },
-                    { label: "PMTiles by Protomaps", href: "https://protomaps.com/docs/pmtiles" },
+                    {
+                        label: "© OpenStreetMap contributors",
+                        href: "https://www.openstreetmap.org/copyright",
+                    },
+                    { label: "Protomaps", href: "https://protomaps.com/" },
+                    {
+                        label: "MapLibre GL JS (BSD-3-Clause)",
+                        href: "https://github.com/maplibre/maplibre-gl-js/blob/main/LICENSE.txt",
+                    },
                     { label: "d3-geo", href: "https://github.com/d3/d3-geo" },
+                    {
+                        label: "Third-party licenses",
+                        href: `${REPO_URL}/blob/main/THIRD_PARTY_LICENSES.md`,
+                    },
                 ],
             },
         ],

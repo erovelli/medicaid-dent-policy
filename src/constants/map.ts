@@ -76,6 +76,14 @@ export const DATA_PATHS = {
 export const PROTOMAPS_STYLE_URL = "https://api.protomaps.com/styles/v2/white.json";
 export const FALLBACK_BG_COLOR = "#f0ede8";
 
+// ── Map attribution ──────────────────────────────────────────
+export const TIGER_ATTRIBUTION =
+    '<a href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html" target="_blank" rel="noopener">U.S. Census TIGER/Line 2023</a>';
+export const WORLD_ATTRIBUTION =
+    '<a href="https://geodata.state.gov/" target="_blank" rel="noopener">U.S. Dept. of State LSIB</a>';
+export const OSM_ATTRIBUTION =
+    '<a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap</a> contributors, <a href="https://protomaps.com" target="_blank" rel="noopener">Protomaps</a>';
+
 // ── Stroke colors ─────────────────────────────────────────────
 export const STROKE_COLOR_ACTIVE = "#1a1917";
 export const STROKE_COLOR_DEFAULT_STATES = "#6b7f7d";
