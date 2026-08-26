@@ -130,21 +130,24 @@ function SectionView({ section }: { section: PageSection }) {
     }
     if (section.kind === "links") {
         return (
-            <ul className="chomp-about-page__link-list">
-                {section.items.map((item) => (
-                    <li key={item.href + item.label}>
-                        <a
-                            href={item.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="chomp-link-inline"
-                        >
-                            <span>{item.label}</span>
-                            <ExternalGlyph />
-                        </a>
-                    </li>
-                ))}
-            </ul>
+            <div>
+                {section.heading && <SectionHeading>{section.heading}</SectionHeading>}
+                <ul className="chomp-about-page__link-list">
+                    {section.items.map((item) => (
+                        <li key={item.href + item.label}>
+                            <a
+                                href={item.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="chomp-link-inline"
+                            >
+                                <span>{item.label}</span>
+                                <ExternalGlyph />
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         );
     }
     if (section.kind === "people") {
