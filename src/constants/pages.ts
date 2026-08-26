@@ -127,14 +127,6 @@ export const PAGE_CONTENT: Record<NavPage, PageContent> = {
                 kind: "links",
                 items: [
                     {
-                        label: "AAPD CDT category reference",
-                        href: "https://www.aapd.org/globalassets/assets/1/7/chapter1.pdf",
-                    },
-                    {
-                        label: "CMS copyright guidelines for CPT, CDT, and NUBC code sets",
-                        href: "https://www.cms.gov/files/document/copyright-guidelines-cpt-cdt-nubc-code-sets-all-years.pdf",
-                    },
-                    {
                         label: "ADA CDT licensing",
                         href: "https://www.ada.org/publications/ada-store-products/licensing-for-commercial-users",
                     },
@@ -146,6 +138,10 @@ export const PAGE_CONTENT: Record<NavPage, PageContent> = {
                 heading: "Software & basemap",
                 items: [
                     {
+                        label: "Third-party licenses",
+                        href: `${import.meta.env.BASE_URL}THIRD_PARTY_LICENSES.md`,
+                    },
+                    {
                         label: "© OpenStreetMap contributors",
                         href: "https://www.openstreetmap.org/copyright",
                     },
@@ -155,10 +151,6 @@ export const PAGE_CONTENT: Record<NavPage, PageContent> = {
                         href: "https://github.com/maplibre/maplibre-gl-js/blob/main/LICENSE.txt",
                     },
                     { label: "d3-geo", href: "https://github.com/d3/d3-geo" },
-                    {
-                        label: "Third-party licenses",
-                        href: `${REPO_URL}/blob/main/THIRD_PARTY_LICENSES.md`,
-                    },
                 ],
             },
         ],
