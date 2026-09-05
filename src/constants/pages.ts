@@ -63,15 +63,39 @@ export const PAGE_CONTENT: Record<NavPage, PageContent> = {
             {
                 kind: "people",
                 items: [
-                    { name: "Kenneth Liu" },
-                    { name: "Clark Morgan" },
-                    { name: "Samat Borbiev" },
-                    { name: "Ningsheng Zhao" },
-                    { name: "Md Shahinoor Rahman" },
-                    { name: "Evan Rovelli" },
-                    { name: "Matt Ngaw" },
-                    { name: "Jake Gilbert" },
-                    { name: "Hawazin Elani" },
+                    {
+                        name: "Kenneth Liu",
+                        photo: `${import.meta.env.BASE_URL}team/kenneth-liu.jpg`,
+                    },
+                    {
+                        name: "Clark Morgan",
+                        photo: `${import.meta.env.BASE_URL}team/clark-morgan.jpg`,
+                    },
+                    {
+                        name: "Samat Borbiev",
+                        photo: `${import.meta.env.BASE_URL}team/samat-borbiev.jpg`,
+                    },
+                    {
+                        name: "Ningsheng Zhao",
+                        photo: `${import.meta.env.BASE_URL}team/ningsheng-zhao.jpg`,
+                    },
+                    {
+                        name: "Md Shahinoor Rahman",
+                        photo: `${import.meta.env.BASE_URL}team/md-shahinoor-rahman.jpg`,
+                    },
+                    {
+                        name: "Evan Rovelli",
+                        photo: `${import.meta.env.BASE_URL}team/evan-rovelli.jpg`,
+                    },
+                    { name: "Matt Ngaw", photo: `${import.meta.env.BASE_URL}team/matt-ngaw.jpg` },
+                    {
+                        name: "Jake Gilbert",
+                        photo: `${import.meta.env.BASE_URL}team/jake-gilbert.jpg`,
+                    },
+                    {
+                        name: "Hawazin Elani",
+                        photo: `${import.meta.env.BASE_URL}team/hawazin-elani.jpg`,
+                    },
                 ],
             },
         ],

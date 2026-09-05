@@ -158,7 +158,11 @@ function SectionView({ section }: { section: PageSection }) {
                         <div
                             className="chomp-avatar chomp-avatar--large"
                             role="img"
-                            aria-label={`${person.name} — photo forthcoming`}
+                            aria-label={
+                                person.photo
+                                    ? `${person.name} — headshot`
+                                    : `${person.name} — photo forthcoming`
+                            }
                             style={
                                 person.photo
                                     ? {
