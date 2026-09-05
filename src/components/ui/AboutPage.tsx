@@ -167,8 +167,8 @@ function SectionView({ section }: { section: PageSection }) {
                                 person.photo
                                     ? {
                                           backgroundImage: `url(${person.photo})`,
-                                          backgroundSize: "cover",
-                                          backgroundPosition: "center",
+                                          backgroundSize: person.photoSize ?? "cover",
+                                          backgroundPosition: person.photoPosition ?? "center",
                                       }
                                     : undefined
                             }

@@ -20,7 +20,15 @@ export type PageSection =
     | { kind: "rule" }
     | {
           kind: "people";
-          items: readonly { name: string; photo?: string }[];
+          items: readonly {
+              name: string;
+              photo?: string;
+              // Per-photo crop overrides for the circular avatar. `photoPosition`
+              // maps to CSS background-position (e.g. "center 30%"); `photoSize`
+              // to background-size (e.g. "130%" to zoom in past "cover").
+              photoPosition?: string;
+              photoSize?: string;
+          }[];
       };
 
 export interface PageContent {
@@ -70,6 +78,7 @@ export const PAGE_CONTENT: Record<NavPage, PageContent> = {
                     {
                         name: "Clark Morgan",
                         photo: `${import.meta.env.BASE_URL}team/clark-morgan.jpg`,
+                        photoPosition: "center 10%",
                     },
                     {
                         name: "Samat Borbiev",
@@ -91,6 +100,7 @@ export const PAGE_CONTENT: Record<NavPage, PageContent> = {
                     {
                         name: "Jake Gilbert",
                         photo: `${import.meta.env.BASE_URL}team/jake-gilbert.jpg`,
+                        photoSize: "170%",
                     },
                     {
                         name: "Hawazin Elani",
